@@ -1,4 +1,6 @@
 #include "bsq.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 static bool		ft_isnumber(char *str)
 {
@@ -64,7 +66,7 @@ int				ft_map_header(t_map *map, int file_name)
 	return (!(map->rows = ft_atoi(rows)));
 }
 
-t_map	*ft_create_map(char *file_name)
+t_map	*ft_create_map(const char *file_name)
 {
 	t_map	*map;
 	int		file;
