@@ -1,0 +1,79 @@
+Certainly! Here is a two-page, beginner-friendly explanation of your BSQ project, its structure, compilation, and how the main logic flows. You can copy this into a README.txt or similar file.
+
+BSQ Project: How It Works
+1. Project Overview
+This project solves the "Biggest Square" (BSQ) problem:
+Given a map (as a text file or from standard input), the program finds the largest possible square that can be placed on the map without overlapping any obstacles, and marks it.
+
+The project is split into several .c files, each handling a specific part of the logic, and a Makefile to automate compilation.
+
+2. Makefile Structure and Compilation
+The Makefile is a script that tells the compiler how to build your program.
+Key parts:
+
+SRC: Lists all the .c source files (main, parser, solver, utils, etc.).
+OBJS: Lists the corresponding .o object files (compiled but not yet linked).
+CC: The compiler (usually gcc).
+CFLAGS: Compiler flags for warnings and includes.
+all: The default rule, builds the program.
+clean/fclean: Remove object files and the executable.
+re: Rebuild everything from scratch.
+norm: Runs Norminette for code style checking.
+How compilation works:
+
+Each .c file is compiled into a .o object file.
+All .o files are linked together to create the final executable (bsq).
+The -I include flag tells the compiler to look for header files in the include directory.
+3. Key Files and Their Roles
+main.c: Entry point; handles input and output flow.
+map_parser.c: Reads and parses the map file or stdin, builds the internal map structure.
+solver.c: Contains the algorithm to find the biggest square.
+printer.c: Handles outputting the final map with the square marked.
+utils.c, utils_2.c, utils_3.c, utils_4.c: Helper functions for memory, parsing, and map management.
+bsq.h: Header file with structure definitions and function prototypes.
+4. How the Program Works (Step by Step)
+A. Program Start (main.c)
+The program starts in main().
+If arguments are given, it treats each as a map file and processes them one by one.
+If no arguments, it reads from standard input.
+B. Map Creation and Parsing
+For each map, ft_create_map() is called (from map_parser.c).
+This function:
+Allocates a t_map structure.
+Opens the file (or uses stdin).
+Calls parse_header() to read the map's first line (to get row count and map symbols).
+Allocates the matrix for the map.
+Reads the map data into the matrix.
+C. Solving the Map
+Once the map is loaded, ft_process_map() (from printer.c) is called.
+This function calls ft_get_square() (from solver.c), which:
+Uses dynamic programming to fill the matrix with the size of the largest square ending at each cell.
+Tracks the largest square found.
+D. Output
+After solving, ft_process_map() prints the map, marking the largest square with the "full" character.
+If there are multiple maps, a newline is printed between outputs.
+5. Key Functions and Their Connections
+ft_create_map: Orchestrates map reading and matrix allocation.
+parse_header: Reads the first line to get map size and symbols.
+allocate_matrix: Allocates memory for the map's matrix.
+ft_read_matrix_line: Reads each line of the map into the matrix.
+ft_get_square: The core solver; finds the biggest square using the matrix.
+ft_process_map: Calls the solver and prints the result.
+Helpers (in utils files) handle:
+
+Memory allocation (ft_realloc, ft_memcpy)
+String and number parsing (ft_atoi, ft_strcmp, is_number)
+File operations (open_map_fd)
+Error handling (ft_map_error, ft_free_map)
+6. How Everything Connects
+main.c decides where to get the map (file or stdin).
+map_parser.c reads and parses the map, building the internal matrix.
+solver.c finds the largest possible square.
+printer.c prints the map with the square marked.
+utils files provide all the small helper functions needed by the above.
+7. Summary
+The Makefile automates building all parts into one program.
+The program reads a map, parses it, solves for the biggest square, and prints the result.
+Each .c file has a clear role, and helpers are split for Norminette compliance.
+The main logic flow is: input → parse → solve → output.
+This structure makes the code modular, maintainable, and easy to extend or debug.
