@@ -2,7 +2,8 @@
 NAME = bsq
 
 # Source files
-SRC = src/main.c src/map_parser.c src/solver.c src/printer.c src/utils.c
+SRC = src/main.c src/map_parser.c src/solver.c src/printer.c \
+      src/utils.c src/utils_2.c src/utils_3.c src/utils_4.c
 
 # Object files
 OBJS = $(SRC:.c=.o)
